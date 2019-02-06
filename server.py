@@ -36,10 +36,32 @@ def user_list():
 
 @app.route("/registration")
 def new_user():
-    """Add new user."""
-
+    """Shows registration form"""
 
     return render_template("registration.html")
+
+@app.route("/confirm_registration", methods=['POST'])
+def confirm():
+    """Add new user."""
+    email_to_check = request.form.get('email')
+    pw = request.form.get('pw')
+
+    if User.query.filter(User.email==email_to_check).first():
+        # do nothing, show message
+        flash("User already exists. Please enter a different email or login.")
+
+        return redirect("/registration")
+
+    else:
+        user = User(email=email_to_check, password=pw)
+
+        # We need to add to the session or it won't ever be stored
+        db.session.add(user)
+
+        # Once we're done, we should commit our work
+        db.session.commit()
+
+        return render_template("confirmation.html")
 
 
 
