@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Login</h1>
+
+<form action="\check_login" method="POST">
+    E-mail Address: <input type="text" name="email" required>
+    Password: <input type="password" name="pw" required>
+    <input type="submit">
+</form>
+
+
+{% endblock %}
