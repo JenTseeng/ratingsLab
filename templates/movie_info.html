@@ -3,16 +3,20 @@
 
   <h2>Title: {{movie.movie_id}}</h2>
 
-  <form action="/submit_rating/<movie_id>", method="POST">
-    Enter or update your rating:
-    <input type="radio" name="rating" value="1">1
-    <input type="radio" name="rating" value="2">2
-    <input type="radio" name="rating" value="3">3
-    <input type="radio" name="rating" value="4">4
-    <input type="radio" name="rating" value="5">5
-    <input type="submit">
-  </form>
-  <br>
+  {% if 'user_id' in session %}
+    <form action="/submit_rating/{{ movie.movie_id }}", method="POST">
+      Enter or update your rating:
+      <input type="radio" name="rating" value="1">1
+      <input type="radio" name="rating" value="2">2
+      <input type="radio" name="rating" value="3">3
+      <input type="radio" name="rating" value="4">4
+      <input type="radio" name="rating" value="5">5
+      <input type="submit">
+    </form>
+  {% else %}
+    <h4>Please login to rate movie.</h4>
+  {% endif %}
+  
   <table>
     <tr>
       <th> User </th>

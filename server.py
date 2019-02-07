@@ -86,6 +86,7 @@ def check_login():
     # all_users = db.session.query(User.user_id)
     # user_id = all_users.filter(User.email==email_to_check, User.password==pw).first()
     user = User.query.filter(User.email==email_to_check, User.password==pw).first()
+    print("User id being sent is: {}".format(user.user_id))
 
     if user:
 
@@ -93,7 +94,7 @@ def check_login():
 
         flash("You are now logged in!")
 
-        return redirect("/users/<user.user_id>")
+        return redirect("/users/{}".format(user.user_id))
 
     else:
 
@@ -114,6 +115,7 @@ def logout():
 @app.route('/users/<user_id>')
 def show_user_details(user_id):
     """User detail page"""
+    print('/n/n/n/n/n/n/n'+user_id+'/n/n/n/n/n/n/n')
     user = User.query.get(int(user_id))
 
     return render_template("user_info.html", user=user)
@@ -138,12 +140,13 @@ def process_rating(movie_id):
     if existing_r:
         existing_r.score = user_r
         db.session.commit()
+        flash("Rating updated.")
 
     else:
         new_rating = Rating(movie_id=movie_id,user_id=session['user_id'],score=user_r)
         db.session.add(new_rating)
         db.session.commit()
-
+        flash("Rating added.")
 
     return redirect("/")
 
