@@ -81,6 +81,30 @@ def connect_to_db(app):
     db.init_app(app)
 
 
+def predict_user_rating(title, user_id):
+
+    m = Movie.query.filter_by(title=title).one()
+    u = User.query.get(user_id)
+
+    ratings = u.ratings
+
+    other_ratings = Rating.query.filter_by(movie_id=m.movie_id).all()
+    other_users = [r.user for r in other_ratings]
+
+    users_w_commonality = []
+
+    for rating in ratings:
+        # print("********Movie********", rating.movie.title)
+        movie_id = rating.movie_id
+        # print("********movie_id******", movie_id)
+        common_ratings = Rating.query.filter(Rating.movie_id==movie_id).all()
+        users = [r.user for r in common_ratings]
+        # print("********common_ratings*******", common_ratings)
+        users_w_commonality.extend(users)
+
+    unique_users = set(users_w_commonality)
+    return unique_users
+
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave
     # you in a state of being able to work with the database directly.

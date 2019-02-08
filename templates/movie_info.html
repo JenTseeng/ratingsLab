@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h2>Title: {{movie.movie_id}}</h2>
+  <h2>Title: {{movie.title}}</h2>
 
   {% if 'user_id' in session %}
     <form action="/submit_rating/{{ movie.movie_id }}", method="POST">
