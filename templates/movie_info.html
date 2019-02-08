@@ -20,12 +20,14 @@
   <table>
     <tr>
       <th> User </th>
+      <th>&nbsp&nbsp&nbsp&nbsp</th>
       <th> Movie Rating </th>
     </tr>
 
     {% for rating in movie.ratings %}
       <tr>
         <td> {{ rating.user.user_id }} </td>
+        <td>&nbsp&nbsp&nbsp&nbsp</td>
         <td> {{ rating.score }} </td>
       </tr>
     {% endfor %}
